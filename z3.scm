@@ -5,12 +5,15 @@
   #:use-module (config)
   #:use-module (context)
   #:use-module (solver)
+  #:use-module (model)
   #:use-module (ast)
   #:re-export (make-config
 	       make-context
 	       make-solver
 	       solver-assert!
 	       solver-check
+	       ;; model
+	       make-model
 	       ;; ast
 	       make-int-sort
 	       make-string-symbol
