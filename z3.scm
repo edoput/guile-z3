@@ -7,6 +7,7 @@
   #:use-module (solver)
   #:use-module (model)
   #:use-module (ast)
+  #:use-module (reflect)
   #:re-export (make-config
 	       make-context
 	       make-solver
@@ -21,4 +22,13 @@
 	       make-int
 	       make-divides
 	       sort->string
-	       ast->string))
+	       ast->string
+	       ;; reflect
+	       model-num-consts
+	       model-num-funcs
+	       model-num-sorts
+	       model-const-decl-ref
+	       model-func-decl-ref
+	       model-has-interpretation?
+	       model-sort-ref
+	       model-sort-universe))
