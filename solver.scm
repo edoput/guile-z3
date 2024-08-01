@@ -6,7 +6,9 @@
   #:use-module (ast)
   #:export (make-solver
 	    solver-assert!
-	    solver-check))
+	    solver-check
+	    solver-reset!
+	    solver-model))
 
 (define-wrapped-pointer-type <solver>
   solver?
@@ -31,6 +33,15 @@
 			    #:return-type int
 			    #:arg-types '(* *)))
 
+(define z3-solver-get-model
+  (foreign-library-function z3-lib "Z3_solver_get_model"
+			    #:return-type '*
+			    #:arg-types '(* *)))
+
+(define z3-solver-reset
+  (foreign-library-function z3-lib "Z3_solver_reset"
+			    #:arg-types '(* *)))
+
 (define (make-solver ctx)
   (wrap-solver (z3-mk-solver (unwrap-context ctx))))
 
@@ -41,4 +52,12 @@
 
 (define (solver-check ctx solver)
   (z3-solver-check (unwrap-context ctx)
+		   (unwrap-solver solver)))
+
+(define (solver-model ctx solver)
+  (z3-solver-get-model (unwrap-context ctx)
+		       (unwrap-solver solver)))
+
+(define (solver-reset! ctx solver)
+  (z3-solver-reset (unwrap-context ctx)
 		   (unwrap-solver solver)))
