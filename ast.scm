@@ -3,7 +3,11 @@
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
   #:use-module (context)
-  #:export (unwrap-sort
+  #:export (wrap-sort
+	    unwrap-sort
+	    wrap-fun
+	    unwrap-fun
+	    ;; 
 	    sort->string
 	    unwrap-ast
 	    ast->string
@@ -50,7 +54,14 @@
   "NOTE: string bytes are owned by context!"
   (pointer->string (z3-ast-to-string (unwrap-context ctx) (unwrap-ast ast))))
 
-;;; 
+;;; fundecl
+
+(define-wrapped-pointer-type <fun>
+  fun?
+  wrap-fun unwrap-fun
+  (lambda (fun p)
+    (format p "#<fun ~a>" (pointer-address (unwrap-fun fun)))))
+
 
 (define z3-mk-int-sort
   (foreign-library-function z3-lib "Z3_mk_int_sort"
