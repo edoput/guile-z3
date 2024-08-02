@@ -4,6 +4,7 @@
   #:use-module (system foreign-library)
   #:use-module (context)
   #:export (make-model
+	    wrap-model
 	    unwrap-model))
 
 ;;; TODO z3 types syntax

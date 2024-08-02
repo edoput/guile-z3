@@ -4,6 +4,7 @@
   #:use-module (system foreign-library)
   #:use-module (context)
   #:use-module (ast)
+  #:use-module (model)
   #:export (make-solver
 	    solver-assert!
 	    solver-check
@@ -55,8 +56,8 @@
 		   (unwrap-solver solver)))
 
 (define (solver-model ctx solver)
-  (z3-solver-get-model (unwrap-context ctx)
-		       (unwrap-solver solver)))
+  (wrap-model (z3-solver-get-model (unwrap-context ctx)
+				   (unwrap-solver solver))))
 
 (define (solver-reset! ctx solver)
   (z3-solver-reset (unwrap-context ctx)
