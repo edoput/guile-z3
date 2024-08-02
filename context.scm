@@ -43,7 +43,7 @@
 			    #:arg-types (list '* int)))
 
 (define z3-set-error-handler
-  (foreign-library-function z30-lib "Z3_set_error_handler"
+  (foreign-library-function z3-lib "Z3_set_error_handler"
 			    #:arg-types '(* *)))
 
 (define (make-context cfg)
