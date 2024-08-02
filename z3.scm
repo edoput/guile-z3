@@ -8,8 +8,12 @@
   #:use-module (model)
   #:use-module (ast)
   #:use-module (reflect)
-  #:re-export (make-config
+  #:re-export (
+	       ;; config
+	       make-config
+	       ;; context
 	       make-context
+	       ;; solver
 	       make-solver
 	       solver-assert!
 	       solver-check
