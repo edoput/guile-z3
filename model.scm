@@ -2,13 +2,11 @@
   #:use-module (system foreign)
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
+  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:use-module (context)
   #:export (make-model
 	    wrap-model
 	    unwrap-model))
-
-;;; TODO z3 types syntax
-;;; I just need to expand (list ctx) to (list '*)
 
 ;; TODO reference counting
 (define-wrapped-pointer-type <model>
@@ -21,28 +19,26 @@
 
 (define z3-mk-model
   (foreign-library-function z3-lib "Z3_mk_model"
-			    #:return-type '*
-			    #:arg-types '(*)))
+			    #:return-type z3:model
+			    #:arg-types (list z3:context)))
 
 (define z3-model-inc-ref
   (foreign-library-function z3-lib "Z3_model_inc_ref"
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context z3:model)))
 
 (define z3-model-dec-ref
   (foreign-library-function z3-lib "Z3_model_dec_ref"
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context z3:model)))
 
 (define z3-model-eval
   (foreign-library-function z3-lib "Z3_model_eval"
 			    #:return-type int
-			    ; ctx model ast bool ast
-			    #:arg-types (list '* '* '* int '*)))
+			    #:arg-types (list z3:context z3:model z3:ast int z3:ast)))
 
 (define z3-model-translate
   (foreign-library-function z3-lib "Z3_model_translate"
 			    #:return-type '*
-			    ;; ctx model model
-			    #:arg-types '(* * *)))
+			    #:arg-types (list z3:context z3:model z3:model)))
 
 (define (make-model)
   (wrap-model (z3-mk-model (unwrap-context (current-context)))))

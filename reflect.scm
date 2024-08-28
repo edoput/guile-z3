@@ -84,7 +84,7 @@
 
 (define z3-model-get-sort
   (foreign-library-function z3-lib "Z3_model_get_sort"
-			    #:return-type '*
+			    #:return-type z3:sort
 			    #:arg-types (list z3:context z3:model unsigned-int)))
 
 (define z3-model-get-sort-universe
