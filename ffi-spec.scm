@@ -10,6 +10,7 @@
 	    context
 	    func-decl
 	    model
+	    solver
 	    sort
 	    string))
 
@@ -18,6 +19,7 @@
 (define context '*)
 (define func-decl '*)
 (define model '*)
+(define solver '*)
 (define sort '*)
 (define string '*)
 
