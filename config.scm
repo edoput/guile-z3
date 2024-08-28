@@ -2,6 +2,7 @@
   #:use-module (system foreign)
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
+  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:export (make-config
 	    unwrap-config))
 
@@ -15,7 +16,7 @@
 
 (define z3-mk-config
   (foreign-library-function z3-lib "Z3_mk_config"
-			    #:return-type '*
+			    #:return-type z3:config
 			    #:arg-types '()))
 
 (define (make-config)

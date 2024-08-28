@@ -10,7 +10,8 @@
 	    context
 	    func-decl
 	    model
-	    sort))
+	    sort
+	    string))
 
 (define ast '*)
 (define config '*)
@@ -18,4 +19,5 @@
 (define func-decl '*)
 (define model '*)
 (define sort '*)
+(define string '*)
 

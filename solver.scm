@@ -2,6 +2,7 @@
   #:use-module (system foreign)
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
+  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:use-module (context)
   #:use-module (ast)
   #:use-module (model)
@@ -21,27 +22,26 @@
 
 (define z3-mk-solver
   (foreign-library-function z3-lib "Z3_mk_solver"
-			    #:return-type '*
-			    #:arg-types '(*)))
+			    #:return-type z3:solver
+			    #:arg-types (list z3:context)))
 
 (define z3-solver-assert
   (foreign-library-function z3-lib "Z3_solver_assert"
-			    ;; ctx solver ast
-			    #:arg-types '(* * *)))
+			    #:arg-types (list z3:context z3:solver z3:ast)))
 
 (define z3-solver-check
   (foreign-library-function z3-lib "Z3_solver_check"
 			    #:return-type int
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context z3:solver)))
 
 (define z3-solver-get-model
   (foreign-library-function z3-lib "Z3_solver_get_model"
 			    #:return-type '*
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context z3:solver)))
 
 (define z3-solver-reset
   (foreign-library-function z3-lib "Z3_solver_reset"
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context z3:solver)))
 
 (define (make-solver ctx)
   (wrap-solver (z3-mk-solver (unwrap-context ctx))))

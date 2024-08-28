@@ -2,10 +2,10 @@
   #:use-module (system foreign)
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
+  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:use-module (context)
   #:use-module (model)
   #:use-module (ast)
-  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:export (model-num-consts
 	    model-num-funcs
 	    model-num-sorts

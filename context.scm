@@ -3,6 +3,7 @@
   #:use-module (system foreign)
   #:use-module (system foreign-object)
   #:use-module (system foreign-library)
+  #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:use-module (config)
   #:export (make-context
 	    unwrap-context
@@ -21,30 +22,31 @@
 
 (define z3-mk-context
   (foreign-library-function z3-lib "Z3_mk_context"
-			    #:return-type '*
-			    #:arg-types '(*)))
+			    #:return-type z3:context
+			    #:arg-types (list z3:config)))
 
 ;;; TODO(edoput) 5.5.5 Foreign objects and scheme
 (define z3-del-context
   (foreign-library-function z3-lib "Z3_del_context"
-			    #:arg-types '(*)))
+			    #:arg-types (list z3:context)))
 
 (define z3-get-error-code
   (foreign-library-function z3-lib "Z3_get_error_code"
-			    #:arg-types '(*)))
+			    #:return-type int
+			    #:arg-types (list z3:context)))
 
 (define z3-get-error-message
   (foreign-library-function z3-lib "Z3_get_error_msg"
 			    #:return-type '*
-			    #:arg-types (list '* int)))
+			    #:arg-types (list z3:context int)))
 
 (define z3-set-ast-print-mode
   (foreign-library-function z3-lib "Z3_set_ast_print_mode"
-			    #:arg-types (list '* int)))
+			    #:arg-types (list z3:context int)))
 
 (define z3-set-error-handler
   (foreign-library-function z3-lib "Z3_set_error_handler"
-			    #:arg-types '(* *)))
+			    #:arg-types (list z3:context '*)))
 
 (define (make-context cfg)
   (wrap-context (z3-mk-context (unwrap-config cfg))))
