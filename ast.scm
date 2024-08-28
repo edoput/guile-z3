@@ -128,40 +128,43 @@
 ;;;  this is the procedural layer to interact with Z3
 
 
-(define (make-int-sort ctx)
-  (wrap-sort (z3-mk-int-sort (unwrap-context ctx))))
+(define (make-int-sort)
+  (wrap-sort (z3-mk-int-sort (unwrap-context (current-context)))))
 
-(define (make-string-symbol ctx name sort)
+(define (make-int-symbol i)
   (wrap-ast
-   (z3-mk-string-symbol (unwrap-context ctx)
-			(scm->pointer name)
-			(unwrap-sort sort))))
+   (z3-mk-int-symbol (unwrap-context (current-context)) i)))
 
-(define (make-const ctx symbol sort)
+(define (make-string-symbol name)
   (wrap-ast
-   (z3-mk-const (unwrap-context ctx)
+   (z3-mk-string-symbol (unwrap-context (current-context))
+			(scm->pointer name))))
+
+(define (make-const symbol sort)
+  (wrap-ast
+   (z3-mk-const (unwrap-context (current-context))
 		(unwrap-ast symbol)
 		(unwrap-sort sort))))
 
-(define (make-int ctx n sort)
+(define (make-int n sort)
   (wrap-ast
-   (z3-mk-int (unwrap-context ctx)
+   (z3-mk-int (unwrap-context (current-context))
 	      n
 	      (unwrap-sort sort))))
 
-(define (make-divides ctx t1 t2)
+(define (make-divides t1 t2)
   (wrap-ast
-   (z3-mk-divides (unwrap-context ctx)
+   (z3-mk-divides (unwrap-context (current-context))
 		  (unwrap-ast t1)
 		  (unwrap-ast t2))))
 
-(define (sort-kind ctx sort)
+(define (sort-kind sort)
   (pointer->string
-   (z3-get-sort-kind (unwrap-context ctx)
+   (z3-get-sort-kind (unwrap-context (current-context))
 		     (unwrap-sort sort))))
 
 (define (sort-name ctx sort)
   (pointer->string 
-   (z3-get-sort-name (unwrap-context ctx)
+   (z3-get-sort-name (unwrap-context (current-context))
 		     (unwrap-sort sort))))
 

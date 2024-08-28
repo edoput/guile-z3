@@ -32,14 +32,14 @@
 			    #:return-type unsigned-int
 			    #:arg-types (list z3:context z3:model)))
 
-(define (model-num-consts ctx model)
-  (z3-model-get-num-consts (unwrap-context ctx) (unwrap-model model)))
+(define (model-num-consts model)
+  (z3-model-get-num-consts (unwrap-context (current-context)) (unwrap-model model)))
 
-(define (model-num-funcs ctx model)
-  (z3-model-get-num-funcs (unwrap-context ctx) (unwrap-model model)))
+(define (model-num-funcs model)
+  (z3-model-get-num-funcs (unwrap-context (current-context)) (unwrap-model model)))
 
-(define (model-num-sorts ctx model)
-  (z3-model-get-num-sorts (unwrap-context ctx) (unwrap-model model)))
+(define (model-num-sorts model)
+  (z3-model-get-num-sorts (unwrap-context (current-context)) (unwrap-model model)))
 
 ;;; declarations
 (define z3-model-get-const-decl
@@ -53,11 +53,11 @@
 			    #:return-type '*
 			    #:arg-types (list z3:context z3:model unsigned-int)))
 
-(define (model-const-decl-ref ctx model i)
-  (wrap-fun (z3-model-get-const-decl (unwrap-context ctx) (unwrap-model model) i)))
+(define (model-const-decl-ref model i)
+  (wrap-fun (z3-model-get-const-decl (unwrap-context (current-context)) (unwrap-model model) i)))
 
 (define (model-func-decl-ref ctx model i)
-  (wrap-fun (z3-model-get-func-decl (unwrap-context ctx) (unwrap-model model) i)))
+  (wrap-fun (z3-model-get-func-decl (unwrap-context (current-context)) (unwrap-model model) i)))
 
 ;;; interpretation
 
@@ -77,8 +77,8 @@
 			    #:arg-types (list z3:context z3:model z3:func-decl)))
 
 
-(define (model-has-interpretation? ctx model func)
-  (= 1 (z3-model-has-interp (unwrap-context ctx) (unwrap-model model) (unwrap-fun func))))
+(define (model-has-interpretation?  model func)
+  (= 1 (z3-model-has-interp (unwrap-context (current-context)) (unwrap-model model) (unwrap-fun func))))
 
 ;;; sorts
 
@@ -92,11 +92,11 @@
 			    #:return-type '*
 			    #:arg-types (list z3:context z3:model z3:sort)))
 
-(define (model-sort-ref ctx model i)
-  (wrap-sort (z3-model-get-sort (unwrap-context ctx) (unwrap-model model) i)))
+(define (model-sort-ref model i)
+  (wrap-sort (z3-model-get-sort (unwrap-context (current-context)) (unwrap-model model) i)))
 
-(define (model-sort-universe ctx model sort)
+(define (model-sort-universe model sort)
   ;; TODO(edoput) z3_ast_vector
-  (z3-model-get-sort-universe (unwrap-context ctx)
+  (z3-model-get-sort-universe (unwrap-context (current-context))
 			      (unwrap-model model)
 			      (unwrap-sort sort)))

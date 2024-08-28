@@ -5,7 +5,8 @@
   #:use-module (system foreign-library)
   #:use-module ((ffi-spec) #:renamer (symbol-prefix-proc 'z3:))
   #:use-module (config)
-  #:export (make-context
+  #:export (current-context
+	    make-context
 	    unwrap-context
 	    error-code
 	    error-message
@@ -19,6 +20,18 @@
   wrap-context unwrap-context
   (lambda (ctx p)
     (format p "#<context ~a>" (pointer-address (unwrap-context ctx)))))
+
+
+(define current-context
+  (make-parameter (wrap-context %null-pointer)
+		  (lambda (ctx)
+		    (if (not (context? ctx))
+			(raise-exception
+			 (make-exception
+			  (make-exception-with-irritants ctx)
+			  (make-exception-with-origin 'current-context)
+			  (make-programming-error)))
+			ctx))))
 
 (define z3-mk-context
   (foreign-library-function z3-lib "Z3_mk_context"
@@ -65,23 +78,24 @@
 ;;; Z3_INTERNAL_FATAL
 ;;; Z3_DEC_REF_ERROR:
 ;;; Z3_EXCEPTION: go take a look at z3_get_error_msg
-(define (error-code ctx)
-  (z3-get-error-code (unwrap-context ctx)))
+(define (error-code)
+  (z3-get-error-code (unwrap-context (current-context))))
 
-(define (error-message ctx error-code)
-  (pointer->string (z3-get-error-message (unwrap-context ctx) error-code)))
+(define (error-message error-code)
+  (pointer->string (z3-get-error-message (unwrap-context (current-context)) error-code)))
 
 (define-values
     (*SMT-LIB-FULL* *SMT-LOW-LEVEL* *SMT-LIB2*)
   (values 0 1 2))
 
-(define (set-context-print-mode! ctx mode)
-  (z3-set-ast-print-mode (unwrap-context ctx) mode))
+(define (set-context-print-mode! mode)
+  (z3-set-ast-print-mode (unwrap-context (current-context)) mode))
 
 ;;; TODO(edoput) unsure; maybe raise condition or remove this
 ;;; and go full procedural.
-(define (set-context-error-handler! ctx hadler)
-  (z3-set-error-handler (unwrap-context ctx)
-			(procedure->pointer handler
-					    ;; context error code
-					    '(* int))))
+(define (set-context-error-handler! handler)
+  (z3-set-error-handler (unwrap-context (current-context))
+			(procedure->pointer
+			 void ;; return type
+			 handler 	;; procedure
+			 (list z3:context int))))

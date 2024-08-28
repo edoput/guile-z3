@@ -11,12 +11,21 @@
   #:re-export (
 	       ;; config
 	       make-config
+	       config-set-param!
 	       ;; context
+	       current-context
 	       make-context
+	       error-code
+	       error-message
 	       ;; solver
 	       make-solver
 	       solver-assert!
 	       solver-check
+	       solver-model
+	       solver-pop-scopes!
+	       solver-push-scope!
+	       solver-reset!
+	       solver-scopes
 	       ;; model
 	       make-model
 	       ;; ast

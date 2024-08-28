@@ -44,14 +44,14 @@
 			    ;; ctx model model
 			    #:arg-types '(* * *)))
 
-(define (make-model ctx)
-  (wrap-model (z3-mk-model (unwrap-context ctx))))
+(define (make-model)
+  (wrap-model (z3-mk-model (unwrap-context (current-context)))))
 
-(define (model-inc-ref ctx model)
-  (z3-model-inc-ref (unwrap-context ctx) (unwrap-model model)))
+(define (model-inc-ref model)
+  (z3-model-inc-ref (unwrap-context (current-context)) (unwrap-model model)))
   
-(define (model-dec-ref ctx model)
-  (z3-model-dec-ref (unwrap-context ctx) (unwrap-model model)))
+(define (model-dec-ref model)
+  (z3-model-dec-ref (unwrap-context (current-context)) (unwrap-model model)))
 
 ;; TODO outparam
 ;;(define (model-eval ctx mode ast complete)

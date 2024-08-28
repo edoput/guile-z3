@@ -43,22 +43,22 @@
   (foreign-library-function z3-lib "Z3_solver_reset"
 			    #:arg-types (list z3:context z3:solver)))
 
-(define (make-solver ctx)
-  (wrap-solver (z3-mk-solver (unwrap-context ctx))))
+(define (make-solver)
+  (wrap-solver (z3-mk-solver (unwrap-context (current-context)))))
 
-(define (solver-assert! ctx solver ast)
-  (z3-solver-assert (unwrap-context ctx)
+(define (solver-assert! solver ast)
+  (z3-solver-assert (unwrap-context (current-context))
 		    (unwrap-solver solver)
 		    (unwrap-ast ast)))
 
-(define (solver-check ctx solver)
-  (z3-solver-check (unwrap-context ctx)
+(define (solver-check solver)
+  (z3-solver-check (unwrap-context (current-context))
 		   (unwrap-solver solver)))
 
-(define (solver-model ctx solver)
-  (wrap-model (z3-solver-get-model (unwrap-context ctx)
+(define (solver-model solver)
+  (wrap-model (z3-solver-get-model (unwrap-context (current-context))
 				   (unwrap-solver solver))))
 
-(define (solver-reset! ctx solver)
-  (z3-solver-reset (unwrap-context ctx)
+(define (solver-reset! solver)
+  (z3-solver-reset (unwrap-context (current-context))
 		   (unwrap-solver solver)))
