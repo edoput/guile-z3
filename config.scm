@@ -48,5 +48,15 @@
   (foreign-library-function z3-lib "Z3_del_config"
 			    #:arg-types (list z3:config)))
 
+(define z3-set-param-value
+  (foreign-library-function z3-lib "Z3_set_param_value"
+			    #:arg-types (list z3:config '* '*)))
+
 (define (make-config)
   (wrap-config (z3-mk-config)))
+
+(define (config-set-param! config param value)
+  (z3-set-param-value
+   (unwrap-config config)
+   (scm->pointer param)
+   (scm->pointer value)))
