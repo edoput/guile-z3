@@ -44,5 +44,9 @@
 			    #:return-type z3:config
 			    #:arg-types '()))
 
+(define z3-del-config
+  (foreign-library-function z3-lib "Z3_del_config"
+			    #:arg-types (list z3:config)))
+
 (define (make-config)
   (wrap-config (z3-mk-config)))
