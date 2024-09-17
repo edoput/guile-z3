@@ -33,7 +33,8 @@
 	    solver-assert!
 	    solver-check
 	    solver-reset!
-	    solver-model))
+	    solver-model
+	    solver-proof))
 
 (define-wrapped-pointer-type <solver>
   solver?
@@ -62,6 +63,11 @@
 			    #:return-type z3:model
 			    #:arg-types (list z3:context z3:solver)))
 
+(define z3-solver-get-proof
+  (foreign-library-function z3-lib "Z3_solver_get_proof"
+			    #:return-type zx:ast
+			    #:arg-types (list z3:context z3:solver)))
+
 (define z3-solver-reset
   (foreign-library-function z3-lib "Z3_solver_reset"
 			    #:arg-types (list z3:context z3:solver)))
@@ -81,6 +87,10 @@
 (define (solver-model solver)
   (wrap-model (z3-solver-get-model (unwrap-context (current-context))
 				   (unwrap-solver solver))))
+
+(define (solver-proof solver)
+  (wrap-ast (z3-solver-get-proof (unwrap-context (current-context))
+				 (unwrap-solver solver))))
 
 (define (solver-reset! solver)
   (z3-solver-reset (unwrap-context (current-context))
