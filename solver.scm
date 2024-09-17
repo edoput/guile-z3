@@ -32,6 +32,9 @@
   #:export (make-solver
 	    solver-assert!
 	    solver-check
+	    solver-scopes
+	    solver-push-scope!
+	    solver-pop-scopes!
 	    solver-reset!
 	    solver-model
 	    solver-proof))
@@ -68,6 +71,19 @@
 			    #:return-type zx:ast
 			    #:arg-types (list z3:context z3:solver)))
 
+(define z3-solver-get-num-scopes
+  (foreign-library-function z3-lib "Z3_solver_get_num_scopes"
+			    #:return-type unsigned-int
+			    #:arg-types (list z3:context z3:solver)))
+
+(define z3-solver-pop
+  (foreign-library-function z3-lib "Z3_solver_pop"
+			    #:arg-types (list z3:context z3:solver unsigned-int)))
+
+(define z3-solver-push
+  (foreign-library-function z3-lib "Z3_solver_push"
+			    #:arg-types (list z3:context z3:solver)))
+
 (define z3-solver-reset
   (foreign-library-function z3-lib "Z3_solver_reset"
 			    #:arg-types (list z3:context z3:solver)))
@@ -91,6 +107,21 @@
 (define (solver-proof solver)
   (wrap-ast (z3-solver-get-proof (unwrap-context (current-context))
 				 (unwrap-solver solver))))
+
+(define (solver-scopes solver)
+  (z3-solver-get-num-scopes (unwrap-context (current-context))
+			    (unwrap-solver solver)))
+
+(define (solver-push-scope! solver)
+  "Create a backtracking point."
+  (z3-solver-push (unwrap-context (current-context))
+		  (unwrap-solver solver)))
+
+(define (solver-pop-scopes! solver n)
+  "Backtrack `n backtracking points."
+  (z3-solver-pop (unwrap-context (current-context))
+		 (unwrap-solver solver)
+		 n))
 
 (define (solver-reset! solver)
   (z3-solver-reset (unwrap-context (current-context))
