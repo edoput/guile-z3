@@ -38,6 +38,7 @@
 	    ;; 
 	    make-sort
 	    make-int-sort
+	    make-int-symbol
 	    make-string-symbol
 	    make-const
 	    make-int
