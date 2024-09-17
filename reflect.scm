@@ -44,13 +44,13 @@
 ;;; declarations
 (define z3-model-get-const-decl
   (foreign-library-function z3-lib "Z3_model_get_const_decl"
-			    #:return-type '*
+			    #:return-type z3:func-decl
 			    #:arg-types (list z3:context z3:model unsigned-int)))
 
 
 (define z3-model-get-func-decl
   (foreign-library-function z3-lib "Z3_model_get_func_decl"
-			    #:return-type '*
+			    #:return-type z3:func-decl
 			    #:arg-types (list z3:context z3:model unsigned-int)))
 
 (define (model-const-decl-ref model i)
@@ -63,7 +63,7 @@
 
 (define z3-model-get-const-interp
   (foreign-library-function z3-lib "Z3_model_get_const_interp"
-			    #:return-type '*
+			    #:return-type z3:ast
 			    #:arg-types (list z3:context z3:model z3:func-decl)))
 
 (define z3-model-has-interp
@@ -73,7 +73,7 @@
 
 (define z3-model-get-func-interp
   (foreign-library-function z3-lib "Z3_model_get_func_interp"
-			    #:return-type '*
+			    #:return-type z3:func-interp
 			    #:arg-types (list z3:context z3:model z3:func-decl)))
 
 
@@ -89,7 +89,7 @@
 
 (define z3-model-get-sort-universe
   (foreign-library-function z3-lib "Z3_model_get_sort_universe"
-			    #:return-type '*
+			    #:return-type '* ; ast-vector
 			    #:arg-types (list z3:context z3:model z3:sort)))
 
 (define (model-sort-ref model i)

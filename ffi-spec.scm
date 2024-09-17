@@ -33,17 +33,23 @@
 	    config
 	    context
 	    func-decl
+	    func-interp
 	    model
+	    parameter
 	    solver
 	    sort
-	    string))
+	    string
+	    symbol))
 
 (define ast '*)
 (define config '*)
 (define context '*)
 (define func-decl '*)
+(define func-interp '*)
 (define model '*)
+(define parameter '*)
+(define parameter-set '*)
 (define solver '*)
 (define sort '*)
 (define string '*)
-
+(define symbol '*)

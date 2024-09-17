@@ -116,13 +116,11 @@
 (define z3-mk-const
   (foreign-library-function z3-lib "Z3_mk_const"
 			    #:return-type z3:ast
-			    ;; ctx symbol sort
 			    #:arg-types (list z3:context z3:ast z3:sort)))
 
 (define z3-mk-int
   (foreign-library-function z3-lib "Z3_mk_int"
 			    #:return-type z3:ast
-			    ;; ctx n sort
 			    #:arg-types (list z3:context int z3:sort)))
 
 (define z3-mk-divides
@@ -135,7 +133,6 @@
 			    #:return-type z3:sort
 			    ;; ctx ast
 			    #:arg-types (list z3:context z3:ast)))
-
 
 (define (ast-sort ctx ast)
   (wrap-sort (z3-get-sort (unwrap-context ctx) (unwrap-ast ast))))

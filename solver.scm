@@ -59,7 +59,7 @@
 
 (define z3-solver-get-model
   (foreign-library-function z3-lib "Z3_solver_get_model"
-			    #:return-type '*
+			    #:return-type z3:model
 			    #:arg-types (list z3:context z3:solver)))
 
 (define z3-solver-reset

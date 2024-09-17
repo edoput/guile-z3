@@ -61,7 +61,7 @@
 
 (define z3-model-translate
   (foreign-library-function z3-lib "Z3_model_translate"
-			    #:return-type '*
+			    #:return-type z3:model
 			    #:arg-types (list z3:context z3:model z3:model)))
 
 (define (make-model)
