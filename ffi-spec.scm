@@ -34,6 +34,7 @@
 	    context
 	    func-decl
 	    func-interp
+	    goal
 	    model
 	    parameter
 	    solver
@@ -46,6 +47,7 @@
 (define context '*)
 (define func-decl '*)
 (define func-interp '*)
+(define goal '*)
 (define model '*)
 (define parameter '*)
 (define parameter-set '*)
