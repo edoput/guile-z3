@@ -76,7 +76,7 @@
 
 (define z3-solver-get-proof
   (foreign-library-function z3-lib "Z3_solver_get_proof"
-			    #:return-type zx:ast
+			    #:return-type z3:ast
 			    #:arg-types (list z3:context z3:solver)))
 
 (define z3-solver-get-num-scopes
