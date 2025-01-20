@@ -99,10 +99,11 @@
 			    #:arg-types (list z3:context z3:goal)))
 
 (define* (make-goal #:optional (models true) (unsat-cores true) (proofs true))
+  ""
   (let ((g (z3-make-goal (unwrap-context (current-context))
 			 models unsat-cores proofs)))
     (begin
-      (z3-goal-inc-ref g)
+      (z3-goal-inc-ref (unwrap-context (current-context)) g)
       (wrap-goal g))))
 
 (define (goal-assert! goal constraint)

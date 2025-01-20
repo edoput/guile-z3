@@ -65,7 +65,10 @@
 			    #:arg-types (list z3:context z3:model z3:model)))
 
 (define (make-model)
-  (wrap-model (z3-mk-model (unwrap-context (current-context)))))
+  (let ((m  (z3-mk-model (unwrap-context (current-context)))))
+    (begin
+      (z3-model-inc-ref  (unwrap-context (current-context)) m)
+      (wrap-model m))))
 
 (define (model-inc-ref model)
   (z3-model-inc-ref (unwrap-context (current-context)) (unwrap-model model)))

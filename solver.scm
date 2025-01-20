@@ -52,6 +52,14 @@
 			    #:return-type z3:solver
 			    #:arg-types (list z3:context)))
 
+(define z3-solver-inc-ref
+  (foreign-library-function z3-lib "Z3_solver_inc_ref"
+			    #:arg-types (list z3:context z3:solver)))
+
+(define z3-solver-dec-ref
+  (foreign-library-function z3-lib "Z3_solver_dec_ref"
+			    #:arg-types (list z3:context z3:solver)))
+
 (define z3-solver-assert
   (foreign-library-function z3-lib "Z3_solver_assert"
 			    #:arg-types (list z3:context z3:solver z3:ast)))
@@ -89,7 +97,10 @@
 			    #:arg-types (list z3:context z3:solver)))
 
 (define (make-solver)
-  (wrap-solver (z3-mk-solver (unwrap-context (current-context)))))
+  (let ((s  (z3-mk-solver (unwrap-context (current-context)))))
+    (begin
+      (z3-solver-inc-ref (unwrap-context (current-context)) s)
+      (wrap-solver s))))
 
 (define (solver-assert! solver ast)
   (z3-solver-assert (unwrap-context (current-context))
