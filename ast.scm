@@ -44,7 +44,7 @@
 	    make-int
 	    make-divides))
 
-(define z3-lib (load-foreign-library "libz3.so.4.13"))
+(define z3-lib (load-foreign-library "libz3.so"))
 
 (define-wrapped-pointer-type <sort>
   sort?

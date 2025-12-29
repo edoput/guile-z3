@@ -38,7 +38,7 @@
 	    model-sort-ref
 	    model-sort-universe))
 
-(define z3-lib (load-foreign-library "libz3.so.4.13"))
+(define z3-lib (load-foreign-library "libz3.so"))
 
 (define z3-model-get-num-consts
   (foreign-library-function z3-lib "Z3_model_get_num_consts"

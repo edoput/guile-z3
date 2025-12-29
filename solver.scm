@@ -45,7 +45,7 @@
   (lambda (sol p)
     (format p "#<solver ~a>" (pointer-address (unwrap-solver sol)))))
 
-(define z3-lib (load-foreign-library "libz3.so.4.13"))
+(define z3-lib (load-foreign-library "libz3.so"))
 
 (define z3-mk-solver
   (foreign-library-function z3-lib "Z3_mk_solver"

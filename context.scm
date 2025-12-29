@@ -36,7 +36,7 @@
 	    set-context-print-mode!
 	    set-context-error-handler!))
 
-(define z3-lib (load-foreign-library "libz3.so.4.13"))
+(define z3-lib (load-foreign-library "libz3.so"))
 
 (define-wrapped-pointer-type <context>
   context?
